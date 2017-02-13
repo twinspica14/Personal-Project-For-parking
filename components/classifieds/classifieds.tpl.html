@@ -1,0 +1,228 @@
+<div ng-controller="AppCtrl" prevent-right-click >
+
+
+
+
+
+<md-toolbar>
+		<div class="md-toolbar-tools">
+			<p><strong>Car Parking Admin</strong></p>
+      <span flex></span>
+			<md-button ng-click="showFilters = true">
+        <md-icon class="mdi mdi-magnify"></md-icon>
+        Search
+      </md-button>
+      <md-button ui-sref="login">Logout</md-button>
+			</div>
+			</md-toolbar>
+
+
+
+
+
+
+<div class="filters" layout-align="center center" ng-show="showFilters"  layout="row">
+    <md-input-container layout="row">
+      <label>Enter Search Term</label>
+      <input type="text" ng-model="classifiedsFilter" />
+    </md-input-container>
+
+    <md-input-container>
+      <label>Category</label>
+      <md-select ng-model="status">
+        <md-option ng-repeat="category in categories" value="{{ category }}">
+          {{category}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+    <md-input-container>
+      <md-button class="md-warn" ng-click="classifiedsFilter=''; category=''; showFilters=false">
+        Clear
+      </md-button>
+    </md-input-container>
+</div>
+
+
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+		<md-toolbar>
+			<h1 class="md-toolbar-tools">Add a classified</h1>
+		</md-toolbar>
+
+		<md-content layout-padding>
+			<form>
+<md-input-container>
+          <label for="title">Name</label>
+          <input   type="text" id="name" ng-model="objects1.name"
+                 md-autofocusobjects1        </md-input-container>
+        <md-input-container>
+          <label for="price">Pan Card</label>
+          <input  type="text" id="Pan" ng-model="objects1.Pan">
+        </md-input-container>
+        <md-input-container>
+          <label for="description">Car Number</label>
+          <textarea n type="text" id="Car" ng-model="objects1.Car"></textarea>
+        </md-input-container>
+         <md-input-container>
+          <label for="description">Car Name</label>
+          <textarea  type="text" id="CarName" ng-model="objects1.carname"  ></textarea>
+        </md-input-container
+>
+  <md-input   ype="text" value="{{ seats[0] }}"
+                   >{{ seats[0] }}</md-input>
+
+
+
+<md-input-container style="margin-bottom: 40px">
+        <label>Confirm Slot</label>
+        <md-select ng-model="objects1.seats">
+          <md-option ng-repeat="img in seats" value="{{img[0].join(', ')}}">{{img[0].join(', ')}}</md-option>
+        </md-select>
+      </md-input-container>
+
+			  <md-input-container>
+			    <label for="title">Time</label>
+			     <input type="time"  ng-model="objects1.time"><mydate>{{objects1.time | date:'HH:mm:ss'}}</mydate>
+			  </md-input-container>
+			 <md-button  ng-click="addTodo()" class="md-primary">
+			    Save
+			  </md-button>
+			  <md-button ng-if="value" ng-click="finished()" class="md-primary">
+			   update
+			  </md-button>
+			  <md-button ng-click="clo()" class="md-warn">
+			    Cancel
+			  </md-button>
+			</form>
+		</md-content>
+</md-sidenav>
+  <!--TODO LIST-->
+<div>
+  <md-content class="md-padding" layout="row" layout-wrap >
+  <md-card ng-repeat="todo in todos | filter:{status: 'registered'} |
+              filter: classifiedsFilter|filter: status" flex="20"
+							class="classified">
+
+    
+<md-card-content style="background-color: #D5D5D5">
+      <!--TODO LABEL-->
+      <p><strong>Registered</strong></p>
+<span class="md-title">Name:{{todo.name}}</span>
+					<p>Pan Card:{{todo.Pan}}</p>
+					<p>Car No:{{todo.Car}}</p>
+					<p>Slot:{{todo.seats}}</p>
+					<p>Enter Time:{{todo.time | date:'HH:mm:ss'}}</p> 
+					
+
+
+
+      
+    <div>
+      <!--START TODO BUTTON-->
+      <md-button class="md-raised" ng-click="startTodo($index, todo)">
+            Start
+        </md-button>
+
+      <!--DELETE TODO BUTTON-->
+      <md-button class="btn btn-danger" ng-click="removeTodo($index, todo)">
+        <i> Remove</i>
+      </md-button>
+
+    </div>
+
+</md-card-content></md-card></md-content></div>
+<div>
+    <md-content class="md-padding" layout="row" layout-wrap>
+
+  <md-card ng-repeat="todo in todos | filter:{status: 'in progress'}|
+              filter: classifiedsFilter|filter: status" flex="20"
+							class="classified" >
+
+    
+<md-card-content style="background-color: #9099A2">
+      <!--TODO LABEL-->
+      <p><strong>Parked</strong></p>
+      <span class="md-title">Name:{{todo.name}}</span>
+					<p>Pan Card:{{todo.Pan}}</p>
+					<p>Car No:{{todo.Car}}</p>
+					<p>Slot:{{todo.seats}}</p>
+					<p>Enter Time:{{todo.time | date:'HH:mm:ss'}}</p> 
+					
+    <div>
+      <!--START TODO BUTTON-->
+      <md-button class="md-raised" ng-click="completeTodo($index, todo)">
+           complete
+        </md-button>
+
+      <!--DELETE TODO BUTTON-->
+      <md-button class="btn btn-danger" ng-click="removeTodo($index, todo)">
+        <i> Remove</i>
+      </md-button>
+
+    </div>
+
+
+</md-card-content></md-card></md-content>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+    <md-content class="md-padding" layout="row" layout-wrap>
+
+  <md-card ng-repeat="todo in todos | filter:{status: 'complete'}|
+              filter: classifiedsFilter|filter: status" flex="20"
+              class="classified" >
+
+    
+<md-card-content style="background-color:#96858F">
+      <!--TODO LABEL-->
+
+       <span class="md-title">Name:{{todo.name}}</span>
+          <p>Pan Card:{{todo.Pan}}</p>
+          <p>Car No:{{todo.Car}}</p>
+          <p>Slot:{{todo.seats}}</p>
+          <p>Enter Time:{{todo.time | date:'HH:mm:ss'}}</p> 
+          <p>Parked Time:{{todo.comp| date:'HH:mm:ss'}}</p> 
+          <p>Time Parked{{todo.dif}} per min 1 rs</p>
+      <!--START TODO BUTTON-->
+      
+
+      <!--DELETE TODO BUTTON-->
+      
+    <div>
+      <!--START TODO BUTTON-->
+     
+
+      <!--DELETE TODO BUTTON-->
+      <md-button class="btn btn-danger" ng-click="removeTodo($index, todo)">
+        <i> Remove</i>
+      </md-button>
+
+    </div>
+</md-card-content></md-card></md-content></div>
+    
+
+
+</div>
